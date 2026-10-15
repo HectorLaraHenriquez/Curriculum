@@ -386,5 +386,13 @@ show('s1');
 document.querySelectorAll('.copy').forEach(b=>b.onclick=()=>{const m=b.dataset.mail;(navigator.clipboard?navigator.clipboard.writeText(m):Promise.reject()).then(()=>{b.textContent=m+' · copiado ✓'},()=>{b.textContent=m})});
 $('moreBtn').onclick=e=>{const t=document.querySelector('.more .txt'),c=t.classList.toggle('clamp');e.target.textContent=c?'Saber más':'Ver menos'};
 </script>
+<script>
+document.addEventListener('click',e=>{
+  const t=e.target.closest('a,button');if(!t||!window.goatcounter||!goatcounter.count)return;
+  let n=t.dataset.p?'tab-'+t.dataset.p:t.dataset.next?'siguiente-'+t.dataset.next:t.id==='moreBtn'?'saber-mas':t.classList.contains('copy')?'copiar-correo':t.closest('.qc')?'quiz':t.classList.contains('cta')?'conversemos':t.href?(t.href.includes('linkedin')?'linkedin':t.href.includes('github.com')?'github':t.href.startsWith('mailto')?'correo':t.getAttribute('href')==='#cv'?'ver-experiencia':''):'';
+  if(n)goatcounter.count({path:'click-'+n,title:n,event:true});
+});
+</script>
+<script data-goatcounter="https://hectorlarahenriquez.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
