@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Héctor Lara Henríquez — Portafolio y CV</title>
+<style>
+  :root{--bg:#0d0e10;--surface:#131518;--line:#23262b;--ink:#e7e6e2;--muted:#8a8f97;--a:#5bb5a6;--b:#d6a45c;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:56px;background:var(--bg)}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,"Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  /* barra */
+  .bar{position:sticky;top:0;z-index:10;background:rgba(13,14,16,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex;gap:22px;align-items:center;height:48px;font-size:13px}
+  .bar strong{font-weight:600;margin-right:auto}
+  .bar a{color:var(--muted)}.bar a:hover{color:var(--ink)}
+  .bar a.sbtn{font:12px var(--mono);border:1px solid var(--line);border-radius:4px;padding:4px 10px;transition:border-color .15s,color .15s}
+  .bar a.sbtn:hover{border-color:var(--a);color:var(--ink)}
+  /* cabecera */
+  .head{padding:36px 0 32px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start}
+  h1{margin:0;font-size:32px;font-weight:600;letter-spacing:-.025em;line-height:1.1}
+  .head p{margin:8px 0 0;color:var(--muted);font-size:14px;max-width:62ch}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;max-width:560px}
+  .chip{font:12px var(--mono);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+  .areas{list-style:none;margin:0;padding:14px 18px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:13px;color:var(--muted);max-width:330px;display:grid;gap:7px}
+  .areas li{position:relative;padding-left:14px;line-height:1.45}
+  .areas li.ttl{padding:0 0 7px;margin-bottom:2px;border-bottom:1px solid var(--line);font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+  .areas li.ttl::before,.areas li.go::before{display:none}
+  .areas{flex:0 1 440px;max-width:440px;padding:18px 22px;font-size:13.5px}
+  .areas li.go{padding:6px 0 0}
+  .areas li.go a{display:inline-block;font:12px var(--mono);color:var(--a);border:1px solid var(--line);border-radius:4px;padding:4px 10px;transition:border-color .15s,color .15s}
+  .areas li.go a:hover{border-color:var(--a);color:var(--ink)}
+  .areas li::before{content:"";position:absolute;left:0;top:.6em;width:5px;height:5px;border-radius:50%;background:var(--a)}
+  h2{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+  h2.lead{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px}
+  .sublead{margin:0 0 14px;font-size:13.5px;color:var(--muted)}
+  /* línea de tiempo */
+  .tl{padding-top:6px}
+  .ti{display:grid;grid-template-columns:64px 1fr;gap:0 26px}
+  .ti .yr{font:500 13px var(--mono);color:var(--muted);text-align:right;padding-top:1px}
+  .ti .bd{position:relative;padding:0 0 30px 26px;border-left:1px solid var(--line)}
+  .ti:last-child .bd{padding-bottom:0}
+  .ti .bd::before{content:"";position:absolute;left:-5px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--bg);border:1px solid var(--muted);transition:border-color .15s,background .15s}
+  .ti:hover .bd::before{border-color:var(--a)}
+  .ti.cur .bd::before{background:var(--a);border-color:var(--a);box-shadow:0 0 0 4px rgba(91,181,166,.15)}
+  .ti.cur .yr{color:var(--a)}
+  .ti .rg{font:11.5px var(--mono);color:var(--muted);margin-bottom:3px}
+  .ti h3{margin:0;font-size:15.5px;font-weight:600;line-height:1.35}
+  .ti .who{font-size:13.5px;color:var(--muted);margin:2px 0 8px}
+  .ti p{margin:0;font-size:14px;color:#c4c3bf;max-width:78ch}
+  @media(max-width:720px){.ti{grid-template-columns:40px 1fr;gap:0 16px}.ti .bd{padding-left:20px}}
+  .more{margin-top:16px;max-width:560px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+  .more p{margin:0;padding:10px 14px;font-size:13.5px;color:#c4c3bf;max-width:none}
+  .more .txt{padding-bottom:4px}
+  .more .txt.clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .more #moreBtn{margin:0 14px 10px}
+  .more button{font:12px var(--mono);color:var(--a);background:none;border:0;padding:0;cursor:pointer;white-space:nowrap}
+  .more button:hover{color:var(--ink)}
+  section{padding:8px 0 44px}
+  /* pestañas */
+  .tabs{display:flex;gap:0;border-bottom:1px solid var(--line);overflow-x:auto}
+  .tabs button{font:inherit;font-size:14px;border:0;background:none;color:var(--muted);padding:11px 18px 11px 0;margin-right:22px;cursor:pointer;border-bottom:1px solid transparent;margin-bottom:-1px;white-space:nowrap}
+  .tabs button:hover{color:var(--ink)}
+  .tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--a)}
+  .panel{padding-top:18px}
+  .panel[hidden]{display:none}
+  .note{font-size:12.5px;color:var(--muted);margin:-4px 0 14px}
+  .note b{font-weight:500;color:var(--b)}
+  .ctl{display:flex;gap:20px;flex-wrap:wrap;margin:0 0 18px}
+  .ctl label{font:11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;align-items:center}
+  .ctl select{font:13px var(--mono);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:5px 8px}
+  .ctl select:focus{outline:1px solid var(--a)}
+  /* KPIs */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));border:1px solid var(--line);margin-bottom:18px}
+  .kpi{padding:16px 18px;border-right:1px solid var(--line)}
+  .kpi:last-child{border-right:0}
+  .kpi small{display:block;font:10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .kpi b{font:500 26px var(--mono);letter-spacing:-.03em}
+  .kpi i{font:normal 12px var(--mono);margin-left:8px}
+  .up{color:var(--a)}.down{color:#d9735f}
+  .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+  .chart{background:var(--bg);padding:18px}
+  .chart h4{margin:0 0 14px;font:500 12px var(--mono);color:var(--muted)}
+  .chart canvas{max-height:250px}
+  .tablebox{border:1px solid var(--line);border-top:0;padding:18px;overflow-x:auto}
+  .tablebox h4{margin:0 0 10px;font:500 12px var(--mono);color:var(--muted)}
+  table{width:100%;border-collapse:collapse;font:12.5px var(--mono)}
+  th,td{text-align:left;padding:7px 10px 7px 0;border-bottom:1px solid var(--line)}
+  th{font-weight:400;color:var(--muted);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+  td.r,th.r{text-align:right}
+  .flag{color:#d9735f}
+  .tabs .n{font:11px var(--mono);color:var(--muted);margin-right:8px}
+  .tabs button[aria-selected=true] .n{color:var(--a)}
+  .nextrow{display:flex;justify-content:flex-end;margin-top:14px}
+  .nextb{font:12px var(--mono);color:var(--a);background:none;border:1px solid var(--line);border-radius:4px;padding:6px 12px;cursor:pointer;transition:border-color .15s,color .15s}
+  .nextb:hover{border-color:var(--a);color:var(--ink)}
+  .quiz{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:14px}
+  .qc{background:var(--bg);padding:18px;display:flex;flex-direction:column;gap:12px}
+  .qc .qn{font:10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .qc h5{margin:0;font-size:14.5px;font-weight:600;line-height:1.4}
+  .qc .opts{display:flex;flex-direction:column;gap:6px}
+  .qc .opts button{font:13px var(--mono);text-align:left;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:7px 10px;cursor:pointer;transition:border-color .15s}
+  .qc .opts button:hover:not(:disabled){border-color:var(--muted)}
+  .qc .opts button:disabled{cursor:default;opacity:.55}
+  .qc .opts button.ok{border-color:var(--a);opacity:1;color:var(--a)}
+  .qc .opts button.no{border-color:#d9735f;opacity:1;color:#d9735f}
+  .qc .ans{display:none;border-top:1px solid var(--line);padding-top:12px}
+  .qc.done .ans{display:block;animation:fadeup .35s ease}
+  .qc .ans b{display:block;font:500 26px var(--mono);letter-spacing:-.03em;color:var(--a)}
+  .qc .ans span{font-size:13px;color:#c4c3bf}
+  .qc .ans em{display:block;font:normal 11.5px var(--mono);color:var(--muted);margin-bottom:4px}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+  .split .col{background:var(--bg);display:flex;flex-direction:column;gap:1px}
+  .split .col:first-child{background:var(--line)}
+  .split .chart{flex:1}
+  .split .tbd p{margin:0;font:12px var(--mono);color:var(--muted);border:1px dashed var(--line);padding:28px 14px;text-align:center}
+  .split .col>.qc{flex:1;padding:22px}
+  .fact{margin:0 0 12px;font-size:14.5px;font-weight:600;line-height:1.4;color:var(--ink)}
+  .fact .fn{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1px solid var(--a);color:var(--a);font:500 11px var(--mono);margin-right:9px;vertical-align:1px}
+  .mb{display:grid;grid-template-columns:1fr 46px;gap:4px 10px;align-items:center;margin-bottom:10px;font-size:12.5px;color:#c4c3bf}
+  .mb span{grid-column:1/-1}
+  .mb i{display:block;height:8px;background:var(--surface);position:relative}
+  .mb i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:var(--a)}
+  .mb.lo i::after{background:var(--b)}
+  .mb b{font:500 14px var(--mono);text-align:right}
+  .qc .pre{margin:0;font-size:14px;color:#c4c3bf;border-left:2px solid var(--b);padding-left:10px}
+  .qc .pre b{color:var(--ink)}
+  .qchart{margin-top:14px}
+  .qchart h4{margin:0 0 10px;font:500 12px var(--mono);color:var(--muted)}
+  @media(max-width:860px){.split{grid-template-columns:1fr}}
+  @keyframes fadeup{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .cap{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.5;color:#c4c3bf}
+  .bigq{padding:28px 0 26px;text-align:center}
+  .bigq .q{margin:0;font-size:clamp(20px,3vw,27px);font-weight:600;letter-spacing:-.02em}
+  .bigq .a{margin:6px 0 0;font-size:clamp(34px,5vw,48px);font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--b)}
+  .bigq .sub{margin:16px auto 0;max-width:60ch;font-size:14.5px;color:#c4c3bf}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+  .vc{background:var(--bg);padding:22px;display:flex;flex-direction:column;gap:6px}
+  .vc .lbl{font:10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .vc b{font:500 44px var(--mono);letter-spacing:-.03em}
+  .vc.good b{color:var(--a)}.vc.bad b{color:#d9735f}
+  .vc span:last-child{font-size:14px;color:#c4c3bf}
+  .pitch.solo{border:1px solid var(--line);border-top:0;align-items:flex-start}
+  .pitch.solo p{max-width:70ch}
+  .pitch.solo p:first-child{font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.35}
+  .pitch.solo p:nth-child(2){font-size:15.5px;color:var(--ink)}
+  @media(max-width:720px){.vs{grid-template-columns:1fr}}
+  .ctarow{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .copy{font:12px var(--mono);color:var(--muted);background:none;border:0;padding:0;cursor:pointer}
+  .copy:hover{color:var(--ink)}
+  #dashboards .panel{position:relative}
+  #dashboards .nextrow{position:absolute;top:50%;right:-21px;transform:translateY(-50%);margin:0;z-index:2}
+  #dashboards .nextb{display:grid;place-items:center;width:42px;height:42px;padding:0;border-radius:50%;font:18px var(--sans,inherit);background:var(--bg);border-color:var(--muted);color:var(--ink);box-shadow:0 2px 10px rgba(0,0,0,.4)}
+  #dashboards .nextb:hover{border-color:var(--a);color:var(--a)}
+  @media(max-width:1180px){#dashboards .nextrow{right:-12px}}
+  @media(max-width:720px){#dashboards .nextrow{position:static;transform:none;display:flex;justify-content:flex-end;margin-top:14px}}
+  .src{font:11px/1.5 var(--mono);color:var(--muted);margin:10px 0 0;opacity:.8}
+  .pitch{background:var(--surface);padding:22px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+  .pitch p{margin:0;font-size:14px;color:#c4c3bf;max-width:46ch}
+  .pitch p:first-child{font-size:16px;color:var(--ink)}
+  .pitch b{color:var(--a);font-weight:600}
+  .pitch .cta{align-self:flex-start;font:12px var(--mono);color:var(--a);border:1px solid var(--line);border-radius:4px;padding:6px 12px;transition:border-color .15s,color .15s}
+  .pitch .cta:hover{border-color:var(--a);color:var(--ink)}
+  /* CV */
+  .cvgrid{display:grid;grid-template-columns:200px 1fr;gap:12px 40px;padding:18px 0;border-top:1px solid var(--line)}
+  .cvgrid dt{font:11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+  .cvgrid dd{margin:0;font-size:14.5px;max-width:78ch}
+  .cvgrid dd p{margin:0 0 6px}
+  .exp{border-top:1px solid var(--line)}
+  .row{display:grid;grid-template-columns:200px 1fr;gap:12px 40px;padding:20px 0;border-bottom:1px solid var(--line)}
+  .row .when{font:12px/1.6 var(--mono);color:var(--muted)}
+  .row .when em{font-style:normal;color:var(--a)}
+  .row h3{margin:0;font-size:15.5px;font-weight:600;line-height:1.35}
+  .row .who{font-size:13.5px;color:var(--muted);margin:2px 0 8px}
+  .row p{margin:0;font-size:14px;color:#c4c3bf;max-width:78ch}
+  footer{border-top:1px solid var(--line);padding:22px 0;font:12px var(--mono);color:var(--muted)}
+  @media(max-width:720px){.areas{max-width:none}.cvgrid,.row{grid-template-columns:1fr;gap:6px}.bar .hide{display:none}.kpi{border-bottom:1px solid var(--line)}}
+</style>
+</head>
+<body>
+<header class="bar"><div class="wrap">
+  <strong>Héctor Lara Henríquez</strong>
+  <a class="sbtn" href="https://github.com/HectorLaraHenriquez" target="_blank" rel="noopener">GitHub ↗</a>
+  <a class="sbtn" href="https://www.linkedin.com/in/h%C3%A9ctor-l-9501b3108/" target="_blank" rel="noopener">LinkedIn ↗</a>
+  <a class="hide" href="mailto:hector.lara@ug.uchile.cl">hector.lara@ug.uchile.cl</a>
+</div></header>
+
+<main class="wrap">
+  <div class="head">
+    <div>
+      <h1>Héctor Lara Henríquez</h1>
+      <p>Sociólogo de la Universidad de Chile<br>MBA en Data Science and Analytics (Universidad de São Paulo – ESALQ)</p>
+      <div class="chips">
+        <span class="chip">Product Owner</span><span class="chip">UX</span><span class="chip">R</span><span class="chip">Python</span><span class="chip">Power BI</span>
+        <span class="chip">Machine Learning</span><span class="chip">LLMs</span><span class="chip">Whisper</span>
+        <span class="chip">Atlas.ti</span><span class="chip">Excel</span><span class="chip">Open source software</span>
+        <span class="chip">Vibecoding</span>
+        <span class="chip">Inglés</span><span class="chip">Alemán</span><span class="chip">Portugués</span>
+      </div>
+      <div class="more">
+        <p class="txt clamp">Mi interés por el área cuantitativa y la programación nació mucho antes de que existieran las herramientas que tenemos hoy. En más de 3 años de experiencia profesional he trabajado con organizaciones públicas y privadas, lo que me ha permitido comprender las necesidades, estándares y límites que involucran tanto a contrapartes como a proveedores. Diseño y elaboro productos de calidad, y disfruto inventando soluciones ingeniosas para tareas tediosas.</p><button type="button" id="moreBtn">Saber más</button>
+      </div>
+    </div>
+    <ul class="areas">
+      <li class="ttl">Servicios</li>
+      <li>Estudios de satisfacción</li>
+      <li>Reportería &amp; automatización</li>
+      <li>Diseño de instrumentos/encuestas y metodologías para levantamientos de datos</li>
+      <li>Construcción y análisis de indicadores / KPIs</li>
+      <li>Creación de herramientas de trabajo (apps y soluciones varias según necesidades)</li>
+      <li>Elaboración de ofertas y licitaciones en Mercado Público</li>
+      <li class="go"><a href="#cv">Revisa mi experiencia ↓</a></li>
+    </ul>
+  </div>
+
+  <section id="dashboards" class="tgroup">
+    <h2 class="lead">¿Buscas agregar valor a tu organización?</h2>
+    <p class="sublead">Observa estas tendencias</p>
+    <div class="tabs" role="tablist">
+      <button role="tab" data-p="s1" aria-selected="true"><span class="n">01</span>El escenario</button>
+      <button role="tab" data-p="s2" aria-selected="false"><span class="n">02</span>La oportunidad</button>
+      <button role="tab" data-p="s3" aria-selected="false"><span class="n">03</span>La propuesta</button>
+    </div>
+
+    <div class="panel" id="s1">
+      <div class="split">
+        <div class="col">
+          <div class="chart">
+            <p class="fact"><span class="fn">1</span>Chile es líder en Latinoamérica en desarrollo de IA.</p>
+            <h4>Índice Latinoamericano de IA 2025 · puntaje 0–100</h4><canvas id="s1c"></canvas>
+          </div>
+          <div class="chart">
+            <p class="fact"><span class="fn">2</span>Las empresas ya usan IA, pero pocas están preparadas.</p>
+            <div class="mb"><span>Empresas chilenas que usan IA</span><i style="--w:45%"></i><b>45%</b></div>
+            <div class="mb lo"><span>Se sienten preparadas para integrarla</span><i style="--w:23%"></i><b>23%</b></div>
+            <p class="fact" style="margin-top:18px"><span class="fn">3</span>Las personas dicen conocerla, pero no la reconocen.</p>
+            <div class="mb"><span>Chilenos que dicen entender qué es la IA</span><i style="--w:74%"></i><b>74%</b></div>
+            <div class="mb lo"><span>Saben identificar qué productos la usan</span><i style="--w:62%"></i><b>62%</b></div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="qc" id="q1">
+            <span class="qn">Antes de ver el dato, ¿qué crees?</span>
+            <p class="pre">Casi <b>7 de cada 10 chilenos</b> cree que la IA hará que se pierdan muchos puestos de trabajo.</p>
+            <h5>¿Qué porcentaje de los empleos está realmente expuesto a la IA?</h5>
+            <div class="opts">
+              <button type="button" data-j="0">~10%</button>
+              <button type="button" data-j="1">~25%</button>
+              <button type="button" data-j="2">~40%</button>
+              <button type="button" data-j="3">~70%</button>
+            </div>
+            <div class="ans">
+              <em></em><b>~40%</b>
+              <span>del empleo mundial está expuesto a la IA, según el FMI; en economías avanzadas llega a ~60%. Estar expuesto no es desaparecer: cerca de la mitad de esos empleos podría beneficiarse si la IA se integra bien.</span>
+              <div class="qchart"><h4>Percepción vs exposición real (%)</h4><canvas id="s1q"></canvas></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="src">Fuentes: CENIA–CEPAL, ILIA 2025 · Encuesta IA Defontana 2025 · Ipsos, Monitor de IA 2026 y Predicciones 2025 · FMI (2024).</p>
+      <div class="nextrow"><button class="nextb" data-next="s2" title="02 La oportunidad" aria-label="Siguiente: La oportunidad">→</button></div>
+    </div>
+
+    <div class="panel" id="s2" hidden>
+      <p class="note">La IA puede sumar hasta un 14% al PIB mundial al 2030, y usarla cuesta cada año menos. Latinoamérica es, por ahora, la región que menos captura.</p>
+      <div class="kpis" id="s2k"></div>
+      <div class="charts">
+        <div class="chart"><h4>Aumento del PIB al 2030 por la IA, según región (%)</h4><canvas id="s2a"></canvas><p class="cap">Latinoamérica es una de las regiones más rezagadas en lo que podría ganar con la IA. Esa brecha es justamente la oportunidad: quien se adelante en la región captura una ventaja que otros aún no tienen.</p></div>
+        <div class="chart"><h4>Precio de una IA nivel GPT-4 (US$ por millón de tokens, escala log)</h4><canvas id="s2b"></canvas><p class="cap">Hoy hay más proveedores compitiendo y precios por token cada vez más bajos. Es un buen momento para incorporar IA: el costo de entrada nunca había sido tan bajo.</p></div>
+      </div>
+      <p class="src">Fuentes: PwC, <i>Sizing the prize</i> (2017) · McKinsey, <i>The economic potential of generative AI</i> (2023) · Epoch AI, <i>LLM inference price trends</i> (benchmark GPQA Diamond).</p>
+      <div class="nextrow"><button class="nextb" data-next="s3" title="03 La propuesta" aria-label="Siguiente: La propuesta">→</button></div>
+    </div>
+
+    <div class="panel" id="s3" hidden>
+      <div class="bigq">
+        <p class="q">Entonces, ¿es la IA la solución a todo?</p>
+        <p class="a">No.</p>
+        <p class="sub">Un experimento de Harvard con 758 consultores de BCG lo mostró con claridad: la IA ayuda mucho en algunas tareas y perjudica en otras que parecen igual de fáciles.</p>
+      </div>
+      <div class="vs">
+        <div class="vc good">
+          <span class="lbl">En tareas donde la IA sirve</span>
+          <b>+40%</b>
+          <span>de calidad en el trabajo, y 25% más rápido.</span>
+        </div>
+        <div class="vc bad">
+          <span class="lbl">En tareas donde la IA no sirve</span>
+          <b>−19 pts</b>
+          <span>de respuestas correctas: quienes usaron IA se equivocaron más que quienes no la usaron.</span>
+        </div>
+      </div>
+      <div class="pitch solo">
+        <p>La diferencia no está en usar IA, <b>sino en saber dónde, cómo y cuándo no.</b></p>
+        <p>Encuestas, bases de datos, indicadores, reportería y aplicaciones a la medida: combino investigación social con ciencia de datos e IA para que la tecnología sume, no reste.</p>
+        <div class="ctarow"><a class="cta" href="mailto:hector.lara@ug.uchile.cl?subject=Conversemos%20sobre%20un%20proyecto" target="_top">Conversemos →</a><button type="button" class="copy" data-mail="hector.lara@ug.uchile.cl">hector.lara@ug.uchile.cl · copiar</button></div>
+      </div>
+      <p class="src">Fuente: Dell'Acqua et al., <i>Navigating the Jagged Technological Frontier</i>, Harvard Business School–BCG (2023).</p>
+      <div class="nextrow"><a class="nextb" href="#cv" title="Ver experiencia" aria-label="Ver experiencia">↓</a></div>
+    </div>
+  </section>
+
+
+  <section id="cv">
+    <h2 class="lead">Experiencia</h2>
+    <div class="tl" id="exp"></div>
+  </section>
+</main>
+<footer><div class="wrap">hector.lara@ug.uchile.cl</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const P=[
+{cur:1,when:"2025 – Presente · part-time",org:"CEM Ingeniería Ltda.",role:"Analista de estudios y datos",title:"Estudios de satisfacción y evaluación para instituciones públicas (CORFO, SERNATUR, Ministerio del Medio Ambiente, entre otros)",desc:"Diseño muestral, control de calidad de terreno y conciliación de bases. Dashboards e informes automatizados (Word/PPT/Excel). Herramientas internas: consumo de APIs públicas (MercadoPúblico), notebooks de análisis, interfaces web para gestión de encuestadores y automatización documental."},
+{when:"Sep – Nov 2024 · part-time",org:"IACC",role:"Docente Instructor",title:"Cursos online de análisis de datos y trabajo social comunitario",desc:"Docente de “Análisis de datos para la evaluación social” y “Trabajo social comunitario”. 3 cursos concluidos."},
+{when:"Sep 2024",org:"PNUD (UNV)",role:"Pasante",title:"Collection & Validation of AI-Enabled Data on Service Providers for GBF Targets",desc:"Análisis del output de datos recolectados por distintas IAs para filtrar, validar y mejorar la base de datos de un sistema de matchmaking entre instituciones ambientales de la ONU."},
+{when:"Mar – Sep 2024",org:"IPS (para EES Ingeniería)",role:"Sociólogo principal",title:"Estudios y evaluaciones de usuarios de IPS ChileAtiende 2024",desc:"Revisión, programación y testeo de cuestionario para minimizar sesgos. Sintaxis en R de limpieza, data wrangling e indicadores reproducibles. Entrega automatizada bimestral de resultados nacionales, regionales y por sucursal/comuna, con tablas e informes comparables."},
+{when:"Ago 2024",org:"JUNAEB (para EES Ingeniería)",role:"Sociólogo consultor",title:"Habitabilidad y funcionalidad de hogares tutores del programa de residencia familiar estudiantil",desc:"Análisis cuantitativo y cualitativo de un sondeo nacional de hogares. Informe de hallazgos y presentación a JUNAEB."},
+{when:"Ene – Feb 2024",org:"FONASA (para EES Ingeniería)",role:"Sociólogo principal",title:"Encuesta telefónica sobre uso del sistema de salud y seguros complementarios",desc:"Mejora y programación del cuestionario, capacitación de agentes, sintaxis en R de limpieza, frecuencias y cruces graficados en informe ejecutivo."},
+{when:"Ene – Abr 2024",org:"UTEM (para EES Ingeniería)",role:"Sociólogo principal",title:"Inserción y progresión laboral de titulados de la UTEM",desc:"Mejora del cuestionario, maximización de una lista de contactos pequeña, coordinación de agentes. Uso de IA para asistir la transcripción de gran volumen cualitativo, luego depurado por humanos."},
+{when:"Ene – Abr 2024",org:"IDEAL (para EES Ingeniería)",role:"Analista",title:"Estudios de mercado en varias tandas de productos",desc:"Estudios sensoriales / degustación que evaluaron preferencias de distintos perfiles de consumidores frente a fórmulas propias y de la competencia."},
+{when:"Ene 2024",org:"DUOC-UC (para EES Ingeniería)",role:"Sociólogo y analista",title:"“Más Mujeres en las TIC” (MMT)",desc:"Análisis cualitativo de entrevistas con ATLAS.ti e informe para la institución."},
+{when:"2022",org:"Ministerio de Salud de Chile",role:"Sociólogo pasante",title:"Encuesta sobre entornos saludables (División de Políticas Públicas Saludables y Promoción)",desc:"Análisis cuantitativos y automatización de reportes con R Markdown."},
+{when:"2021",org:"Fundación Luksic",role:"Apoyo en relacionamiento con colegios técnico profesionales",title:"MueveTP",desc:"Contacto con directivas de una decena de colegios, agendamiento de reuniones y levantamiento de información en terreno."},
+{when:"2019",org:"Escuela de Zúñiga",role:"Pasante",title:"Curso de Sociología Rural",desc:"Acompañamiento en terreno de labores educativas en colegio rural de la VI región. Proyecto a cargo de Manuel Canales."},
+{when:"2018",org:"Servicio Jesuita Migrante (U. Alberto Hurtado)",role:"Profesor de Castellano e Investigador",title:"ZANMI",desc:"Profesor de castellano para migrantes haitianos en el proyecto de integración ZANMI (coord. Rubén Morgado). Investigación cualitativa derivada de la experiencia."},
+{when:"2013 – 2014",org:"American Field Service",role:"Estudiante de intercambio",title:"Intercambio en Alemania",desc:"Estudio de lengua alemana y cursos sobre democracia y tolerancia."}
+];
+const A='#5bb5a6',B='#d6a45c',G='#3a3f46';
+Chart.defaults.color='#8a8f97';Chart.defaults.borderColor='#23262b';
+Chart.defaults.font.family='ui-monospace,"SF Mono",Menlo,Consolas,monospace';Chart.defaults.font.size=11;
+Chart.defaults.elements.bar.borderRadius=0;
+const rng=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const $=id=>document.getElementById(id);
+const fmt=n=>Math.round(n).toLocaleString('es-CL');
+const sel=(id,opts,cb)=>{$(id).innerHTML=opts.map(o=>`<option>${o}</option>`).join('');$(id).onchange=cb};
+const kpi=(l,v,d)=>`<div class="kpi"><small>${l}</small><b>${v}</b>${d===undefined?'':`<i class="${d>=0?'up':'down'}">${d>=0?'+':'−'}${Math.abs(d).toFixed(1)}</i>`}</div>`;
+const charts={};
+function draw(id,cfg){charts[id]&&charts[id].destroy();cfg.options={responsive:true,animation:{duration:200},plugins:{legend:{display:cfg.data.datasets.length>1,position:'bottom',labels:{boxWidth:10,boxHeight:2}}},...cfg.options};charts[id]=new Chart($(id),cfg)}
+
+/* Experiencia */
+let prevY='';
+$('exp').innerHTML=P.map(p=>{const y=(p.when.match(/\d{4}/)||[''])[0],show=y!==prevY;prevY=y;
+  const rg=p.when.replace(' · part-time','').replace('Presente','hoy');
+  return `<div class="ti${p.cur?' cur':''}"><div class="yr">${show?y:''}</div>
+  <div class="bd"><div class="rg">${rg}</div><h3>${p.title}</h3><div class="who">${p.org} · ${p.role}</div><p>${p.desc}</p></div></div>`}).join('');
+
+/* Historia: datos reales con fuente */
+const pct={x:{ticks:{callback:v=>v+'%'}},y:{grid:{display:false}}};
+let quizBuilt=false;
+function s1(){
+  draw('s1c',{type:'bar',data:{labels:['Chile','Brasil','Uruguay','Promedio región'],datasets:[{data:[70.56,67.39,62.32,42.98],backgroundColor:[A,G,G,B]}]},options:{indexAxis:'y',scales:{x:{min:0,max:100},y:{grid:{display:false}}}}});
+  if(quizBuilt)return;quizBuilt=true;
+  const card=$('q1'),C=2;
+  card.querySelector('.opts').onclick=e=>{const b=e.target.closest('button[data-j]');if(!b)return;const j=+b.dataset.j;
+    card.querySelectorAll('.opts button').forEach(k=>{k.disabled=true;if(+k.dataset.j===C)k.classList.add('ok')});
+    if(j!==C)b.classList.add('no');
+    card.querySelector('em').textContent=j===C?'Correcto. La realidad:':'La realidad:';
+    card.classList.add('done');
+    draw('s1q',{type:'bar',data:{labels:['Chilenos que creen que se perderán muchos empleos','Empleo expuesto · economías avanzadas','Empleo expuesto · mundo'],datasets:[{data:[68,60,40],backgroundColor:[G,B,A]}]},options:{indexAxis:'y',scales:{x:{min:0,max:100,ticks:{callback:v=>v+'%'}},y:{grid:{display:false},ticks:{callback:function(v){const l=this.getLabelForValue(v);return l.length>26?l.match(/.{1,26}(\s|$)/g).map(s=>s.trim()):l}}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw+'%'}}}}});
+  };
+}
+function s2(){
+  $('s2k').innerHTML=kpi('PIB mundial al 2030','+14%')+kpi('Valor adicional (PwC)','US$15,7 bn')+kpi('IA generativa, por año','US$2,6–4,4 bn')+kpi('Precio nivel GPT-4, 2023→2024','312× menor');
+  const reg=['China','Norteamérica','Mundo','Europa y Asia desarrollada','Latinoamérica, África y Asia en desarrollo'],lab=['26%','14,5%','14%','9–12%','menos de 6%'];
+  draw('s2a',{type:'bar',data:{labels:reg,datasets:[{data:[26,14.5,14,12,6],backgroundColor:[G,G,A,G,B]}]},options:{indexAxis:'y',scales:{x:{min:0,max:30,ticks:{callback:v=>v+'%'}},y:{grid:{display:false},ticks:{callback:function(v){const l=this.getLabelForValue(v);return l.length>22?l.match(/.{1,22}(\s|$)/g).map(x=>x.trim()):l}}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>lab[c.dataIndex]}}}}});
+  draw('s2b',{type:'line',data:{labels:['Mar 2023\nGPT-4','Mar 2024\nClaude 3 Haiku','May 2024\nGemini 1.5 Flash','Dic 2024\nPhi 4'].map(x=>x.split('\n')),datasets:[{data:[37.5,0.5,0.13,0.12],borderColor:A,backgroundColor:A+'1f',fill:true,tension:.2,pointRadius:4,pointBackgroundColor:A}]},options:{scales:{y:{type:'logarithmic',min:0.05,max:100,ticks:{callback:v=>[0.1,1,10,100].includes(v)?'US$'+v:''}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'US$ '+c.raw.toLocaleString('es-CL')+' por millón de tokens'}}}}});
+}
+function s3(){}
+
+/* Pestañas */
+const RENDER={s1,s2,s3};
+function show(id){
+  const grp=document.querySelector(`[data-p="${id}"]`).closest('.tgroup');
+  grp.querySelectorAll('[role=tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.p===id));
+  grp.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!==id);
+  RENDER[id]();
+}
+document.querySelectorAll('.tabs').forEach(t=>t.onclick=e=>{const b=e.target.closest('[data-p]');if(b)show(b.dataset.p)});
+document.querySelectorAll('button.nextb').forEach(b=>b.onclick=()=>{show(b.dataset.next);$('dashboards').scrollIntoView({behavior:'smooth'})});
+show('s1');
+document.querySelectorAll('.copy').forEach(b=>b.onclick=()=>{const m=b.dataset.mail;(navigator.clipboard?navigator.clipboard.writeText(m):Promise.reject()).then(()=>{b.textContent=m+' · copiado ✓'},()=>{b.textContent=m})});
+$('moreBtn').onclick=e=>{const t=document.querySelector('.more .txt'),c=t.classList.toggle('clamp');e.target.textContent=c?'Saber más':'Ver menos'};
+</script>
+</body>
+</html>
