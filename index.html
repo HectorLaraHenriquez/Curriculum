@@ -179,6 +179,22 @@
   .row p{margin:0;font-size:14px;color:#c4c3bf;max-width:78ch}
   footer{border-top:1px solid var(--line);padding:22px 0;font:12px var(--mono);color:var(--muted)}
   @media(max-width:720px){.areas{max-width:none}.cvgrid,.row{grid-template-columns:1fr;gap:6px}.bar .hide{display:none}.kpi{border-bottom:1px solid var(--line)}}
+  .bar button.sbtn{font:12px var(--mono);color:var(--muted);background:none;border:1px solid var(--line);border-radius:4px;padding:4px 10px;cursor:pointer;transition:border-color .15s,color .15s}
+  .bar button.sbtn:hover{border-color:var(--a);color:var(--ink)}
+  @media(max-width:720px){.bar .wrap{gap:8px}.bar strong{display:none}.bar .sbtn{padding:4px 7px}.bar .wrap{justify-content:flex-end}}
+  @media print{
+    @page{size:A4;margin:10mm}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    html,body{background:var(--bg)!important}
+    .bar{position:static}.noprint,.tabs,.nextrow,#dashboards .nextrow{display:none!important}
+    .panel{padding-top:6px;margin-bottom:16px}
+    .panel::before{content:attr(data-t);display:block;font:500 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a);margin:12px 0 10px}
+    .chart,.kpis,.ti,.vs,.qc,.pitch,.more{break-inside:avoid}
+    .panel::before,.note{break-after:avoid}
+    .split .col:first-child,.split{background:var(--bg)}.split .col{border-bottom:1px solid var(--line)}
+    .charts{grid-template-columns:1fr}
+    .panel,#cv{break-before:page}
+  }
 </style>
 </head>
 <body>
@@ -186,6 +202,8 @@
   <strong>Héctor Lara Henríquez</strong>
   <a class="sbtn" href="https://github.com/HectorLaraHenriquez" target="_blank" rel="noopener">GitHub ↗</a>
   <a class="sbtn" href="https://www.linkedin.com/in/h%C3%A9ctor-l-9501b3108/" target="_blank" rel="noopener">LinkedIn ↗</a>
+  <button type="button" class="sbtn" id="langBtn">EN</button>
+  <button type="button" class="sbtn noprint" id="pdfBtn">Descargar PDF ↓</button>
   <a class="hide" href="mailto:hector.lara@ug.uchile.cl">hector.lara@ug.uchile.cl</a>
 </div></header>
 
@@ -221,9 +239,9 @@
     <h2 class="lead">¿Buscas agregar valor a tu organización?</h2>
     <p class="sublead">Observa estas tendencias</p>
     <div class="tabs" role="tablist">
-      <button role="tab" data-p="s1" aria-selected="true"><span class="n">01</span>El escenario</button>
-      <button role="tab" data-p="s2" aria-selected="false"><span class="n">02</span>La oportunidad</button>
-      <button role="tab" data-p="s3" aria-selected="false"><span class="n">03</span>La propuesta</button>
+      <button role="tab" data-p="s1" aria-selected="true"><span class="n">01</span><span>El escenario</span></button>
+      <button role="tab" data-p="s2" aria-selected="false"><span class="n">02</span><span>La oportunidad</span></button>
+      <button role="tab" data-p="s3" aria-selected="false"><span class="n">03</span><span>La propuesta</span></button>
     </div>
 
     <div class="panel" id="s1">
@@ -315,60 +333,146 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 const P=[
-{cur:1,when:"2025 – Presente · part-time",org:"CEM Ingeniería Ltda.",role:"Analista de estudios y datos",title:"Estudios de satisfacción y evaluación para instituciones públicas (CORFO, SERNATUR, Ministerio del Medio Ambiente, entre otros)",desc:"Diseño muestral, control de calidad de terreno y conciliación de bases. Dashboards e informes automatizados (Word/PPT/Excel). Herramientas internas: consumo de APIs públicas (MercadoPúblico), notebooks de análisis, interfaces web para gestión de encuestadores y automatización documental."},
-{when:"Sep – Nov 2024 · part-time",org:"IACC",role:"Docente Instructor",title:"Cursos online de análisis de datos y trabajo social comunitario",desc:"Docente de “Análisis de datos para la evaluación social” y “Trabajo social comunitario”. 3 cursos concluidos."},
-{when:"Sep 2024",org:"PNUD (UNV)",role:"Pasante",title:"Collection & Validation of AI-Enabled Data on Service Providers for GBF Targets",desc:"Análisis del output de datos recolectados por distintas IAs para filtrar, validar y mejorar la base de datos de un sistema de matchmaking entre instituciones ambientales de la ONU."},
-{when:"Mar – Sep 2024",org:"IPS (para EES Ingeniería)",role:"Sociólogo principal",title:"Estudios y evaluaciones de usuarios de IPS ChileAtiende 2024",desc:"Revisión, programación y testeo de cuestionario para minimizar sesgos. Sintaxis en R de limpieza, data wrangling e indicadores reproducibles. Entrega automatizada bimestral de resultados nacionales, regionales y por sucursal/comuna, con tablas e informes comparables."},
-{when:"Ago 2024",org:"JUNAEB (para EES Ingeniería)",role:"Sociólogo consultor",title:"Habitabilidad y funcionalidad de hogares tutores del programa de residencia familiar estudiantil",desc:"Análisis cuantitativo y cualitativo de un sondeo nacional de hogares. Informe de hallazgos y presentación a JUNAEB."},
-{when:"Ene – Feb 2024",org:"FONASA (para EES Ingeniería)",role:"Sociólogo principal",title:"Encuesta telefónica sobre uso del sistema de salud y seguros complementarios",desc:"Mejora y programación del cuestionario, capacitación de agentes, sintaxis en R de limpieza, frecuencias y cruces graficados en informe ejecutivo."},
-{when:"Ene – Abr 2024",org:"UTEM (para EES Ingeniería)",role:"Sociólogo principal",title:"Inserción y progresión laboral de titulados de la UTEM",desc:"Mejora del cuestionario, maximización de una lista de contactos pequeña, coordinación de agentes. Uso de IA para asistir la transcripción de gran volumen cualitativo, luego depurado por humanos."},
-{when:"Ene – Abr 2024",org:"IDEAL (para EES Ingeniería)",role:"Analista",title:"Estudios de mercado en varias tandas de productos",desc:"Estudios sensoriales / degustación que evaluaron preferencias de distintos perfiles de consumidores frente a fórmulas propias y de la competencia."},
-{when:"Ene 2024",org:"DUOC-UC (para EES Ingeniería)",role:"Sociólogo y analista",title:"“Más Mujeres en las TIC” (MMT)",desc:"Análisis cualitativo de entrevistas con ATLAS.ti e informe para la institución."},
-{when:"2022",org:"Ministerio de Salud de Chile",role:"Sociólogo pasante",title:"Encuesta sobre entornos saludables (División de Políticas Públicas Saludables y Promoción)",desc:"Análisis cuantitativos y automatización de reportes con R Markdown."},
-{when:"2021",org:"Fundación Luksic",role:"Apoyo en relacionamiento con colegios técnico profesionales",title:"MueveTP",desc:"Contacto con directivas de una decena de colegios, agendamiento de reuniones y levantamiento de información en terreno."},
-{when:"2019",org:"Escuela de Zúñiga",role:"Pasante",title:"Curso de Sociología Rural",desc:"Acompañamiento en terreno de labores educativas en colegio rural de la VI región. Proyecto a cargo de Manuel Canales."},
-{when:"2018",org:"Servicio Jesuita Migrante (U. Alberto Hurtado)",role:"Profesor de Castellano e Investigador",title:"ZANMI",desc:"Profesor de castellano para migrantes haitianos en el proyecto de integración ZANMI (coord. Rubén Morgado). Investigación cualitativa derivada de la experiencia."},
-{when:"2013 – 2014",org:"American Field Service",role:"Estudiante de intercambio",title:"Intercambio en Alemania",desc:"Estudio de lengua alemana y cursos sobre democracia y tolerancia."}
+{cur:1,when:"2025 – Presente · part-time",org:"CEM Ingeniería Ltda.",role:"Analista de estudios y datos",title:"Estudios de satisfacción y evaluación para instituciones públicas (CORFO, SERNATUR, Ministerio del Medio Ambiente, entre otros)",desc:"Diseño muestral, control de calidad de terreno y conciliación de bases. Dashboards e informes automatizados (Word/PPT/Excel). Herramientas internas: consumo de APIs públicas (MercadoPúblico), notebooks de análisis, interfaces web para gestión de encuestadores y automatización documental.",
+ en:{when:"2025 – Present · part-time",role:"Studies and data analyst",title:"Satisfaction and evaluation studies for public institutions (CORFO, SERNATUR, Ministry of the Environment, among others)",desc:"Sampling design, field quality control and database reconciliation. Automated dashboards and reports (Word/PPT/Excel). Internal tools: consuming public APIs (MercadoPúblico), analysis notebooks, web interfaces for managing survey interviewers, and document automation."}},
+{when:"Sep – Nov 2024 · part-time",org:"IACC",role:"Docente Instructor",title:"Cursos online de análisis de datos y trabajo social comunitario",desc:"Docente de “Análisis de datos para la evaluación social” y “Trabajo social comunitario”. 3 cursos concluidos.",
+ en:{role:"Instructor",title:"Online courses on data analysis and community social work",desc:"Instructor for “Data analysis for social evaluation” and “Community social work”. 3 courses completed."}},
+{when:"Sep 2024",org:"PNUD (UNV)",role:"Pasante",title:"Collection & Validation of AI-Enabled Data on Service Providers for GBF Targets",desc:"Análisis del output de datos recolectados por distintas IAs para filtrar, validar y mejorar la base de datos de un sistema de matchmaking entre instituciones ambientales de la ONU.",
+ en:{org:"UNDP (UNV)",role:"Intern",desc:"Analysis of the data output collected by different AIs to filter, validate and improve the database of a matchmaking system between UN environmental institutions."}},
+{when:"Mar – Sep 2024",org:"IPS (para EES Ingeniería)",role:"Sociólogo principal",title:"Estudios y evaluaciones de usuarios de IPS ChileAtiende 2024",desc:"Revisión, programación y testeo de cuestionario para minimizar sesgos. Sintaxis en R de limpieza, data wrangling e indicadores reproducibles. Entrega automatizada bimestral de resultados nacionales, regionales y por sucursal/comuna, con tablas e informes comparables.",
+ en:{org:"IPS (for EES Ingeniería)",role:"Lead sociologist",title:"User studies and evaluations of IPS ChileAtiende 2024",desc:"Review, programming and testing of the questionnaire to minimize bias. R scripts for cleaning, data wrangling and reproducible indicators. Automated bimonthly delivery of national, regional and branch/commune results, with comparable tables and reports."}},
+{when:"Ago 2024",org:"JUNAEB (para EES Ingeniería)",role:"Sociólogo consultor",title:"Habitabilidad y funcionalidad de hogares tutores del programa de residencia familiar estudiantil",desc:"Análisis cuantitativo y cualitativo de un sondeo nacional de hogares. Informe de hallazgos y presentación a JUNAEB.",
+ en:{when:"Aug 2024",org:"JUNAEB (for EES Ingeniería)",role:"Consulting sociologist",title:"Housing conditions and functionality of host households in the student family residence program",desc:"Quantitative and qualitative analysis of a national household survey. Findings report and presentation to JUNAEB."}},
+{when:"Ene – Feb 2024",org:"FONASA (para EES Ingeniería)",role:"Sociólogo principal",title:"Encuesta telefónica sobre el uso del sistema de salud y seguros complementarios",desc:"Mejora y programación del cuestionario, capacitación de agentes, sintaxis en R de limpieza, frecuencias y cruces graficados en informe ejecutivo.",
+ en:{when:"Jan – Feb 2024",org:"FONASA (for EES Ingeniería)",role:"Lead sociologist",title:"Telephone survey on use of the health system and complementary insurance",desc:"Questionnaire improvement and programming, interviewer training, R scripts for cleaning, frequencies and cross-tabulations charted in an executive report."}},
+{when:"Ene – Abr 2024",org:"UTEM (para EES Ingeniería)",role:"Sociólogo principal",title:"Inserción y progresión laboral de titulados de la UTEM",desc:"Mejora del cuestionario, maximización de una lista de contactos pequeña, coordinación de agentes. Uso de IA para asistir la transcripción de gran volumen cualitativo, luego depurado por humanos.",
+ en:{when:"Jan – Apr 2024",org:"UTEM (for EES Ingeniería)",role:"Lead sociologist",title:"Labor market entry and progression of UTEM graduates",desc:"Questionnaire improvement, maximizing a small contact list, interviewer coordination. AI used to assist the transcription of a large volume of qualitative data, then reviewed by humans."}},
+{when:"Ene – Abr 2024",org:"IDEAL (para EES Ingeniería)",role:"Analista",title:"Estudios de mercado en varias tandas de productos",desc:"Estudios sensoriales / degustación que evaluaron preferencias de distintos perfiles de consumidores frente a fórmulas propias y de la competencia.",
+ en:{when:"Jan – Apr 2024",org:"IDEAL (for EES Ingeniería)",role:"Analyst",title:"Market studies across several product batches",desc:"Sensory / taste-test studies assessing the preferences of different consumer profiles for the brand's own formulas and its competitors'."}},
+{when:"Ene 2024",org:"DUOC-UC (para EES Ingeniería)",role:"Sociólogo y analista",title:"“Más Mujeres en las TIC” (MMT)",desc:"Análisis cualitativo de entrevistas con ATLAS.ti e informe para la institución.",
+ en:{when:"Jan 2024",org:"DUOC-UC (for EES Ingeniería)",role:"Sociologist and analyst",title:"“More Women in ICT” (MMT)",desc:"Qualitative analysis of interviews with ATLAS.ti and report for the institution."}},
+{when:"2022",org:"Ministerio de Salud de Chile",role:"Sociólogo pasante",title:"Encuesta sobre entornos saludables (División de Políticas Públicas Saludables y Promoción)",desc:"Análisis cuantitativos y automatización de reportes con R Markdown.",
+ en:{org:"Ministry of Health of Chile",role:"Intern sociologist",title:"Healthy environments survey (Division of Healthy Public Policies and Promotion)",desc:"Quantitative analyses and report automation with R Markdown."}},
+{when:"2021",org:"Fundación Luksic",role:"Apoyo en relacionamiento con colegios técnico profesionales",title:"MueveTP",desc:"Contacto con directivas de una decena de colegios, agendamiento de reuniones y levantamiento de información en terreno.",
+ en:{role:"Support in relations with technical-vocational schools",desc:"Contact with the leadership of about ten schools, scheduling meetings and gathering information in the field."}},
+{when:"2019",org:"Escuela de Zúñiga",role:"Pasante",title:"Curso de Sociología Rural",desc:"Acompañamiento en terreno de labores educativas en colegio rural de la VI región. Proyecto a cargo de Manuel Canales.",
+ en:{role:"Intern",title:"Rural Sociology course",desc:"Field support of educational work at a rural school in the VI region. Project led by Manuel Canales."}},
+{when:"2018",org:"Servicio Jesuita Migrante (U. Alberto Hurtado)",role:"Profesor de Castellano e Investigador",title:"ZANMI",desc:"Profesor de castellano para migrantes haitianos en el proyecto de integración ZANMI (coord. Rubén Morgado). Investigación cualitativa derivada de la experiencia.",
+ en:{org:"Jesuit Migrant Service (Alberto Hurtado U.)",role:"Spanish teacher and researcher",desc:"Spanish teacher for Haitian migrants in the ZANMI integration project (coord. Rubén Morgado). Qualitative research derived from the experience."}},
+{when:"2013 – 2014",org:"American Field Service",role:"Estudiante de intercambio",title:"Intercambio en Alemania",desc:"Estudio de lengua alemana y cursos sobre democracia y tolerancia.",
+ en:{role:"Exchange student",title:"Exchange in Germany",desc:"German language study and courses on democracy and tolerance."}}
 ];
+const EN={
+"Sociólogo de la Universidad de Chile<br>MBA en Data Science and Analytics (Universidad de São Paulo – ESALQ)":"Sociologist, Universidad de Chile<br>MBA in Data Science and Analytics (University of São Paulo – ESALQ)",
+"Inglés":"English","Alemán":"German","Portugués":"Portuguese",
+"Mi interés por el área cuantitativa y la programación nació mucho antes de que existieran las herramientas que tenemos hoy. En más de 3 años de experiencia profesional he trabajado con organizaciones públicas y privadas, lo que me ha permitido comprender las necesidades, estándares y límites que involucran tanto a contrapartes como a proveedores. Diseño y elaboro productos de calidad, y disfruto inventando soluciones ingeniosas para tareas tediosas.":"My interest in quantitative work and programming began long before today's tools existed. With more than 3 years of professional experience, I have worked with public and private organizations, which has given me an understanding of the needs, standards and limits that matter to both clients and suppliers. I design and produce quality work, and I enjoy inventing clever solutions to tedious tasks.",
+"Servicios":"Services",
+"Estudios de satisfacción":"Satisfaction studies",
+"Reportería &amp; automatización":"Reporting &amp; automation",
+"Diseño de instrumentos/encuestas y metodologías para levantamientos de datos":"Design of instruments/surveys and methodologies for data collection",
+"Construcción y análisis de indicadores / KPIs":"Building and analysis of indicators / KPIs",
+"Creación de herramientas de trabajo (apps y soluciones varias según necesidades)":"Custom work tools (apps and solutions as needed)",
+"Elaboración de ofertas y licitaciones en Mercado Público":"Preparation of bids and tenders on Mercado Público",
+"Revisa mi experiencia ↓":"See my experience ↓",
+"¿Buscas agregar valor a tu organización?":"Looking to add value to your organization?",
+"Observa estas tendencias":"Look at these trends",
+"El escenario":"The landscape","La oportunidad":"The opportunity","La propuesta":"The proposal",
+"<span class=\"fn\">1</span>Chile es líder en Latinoamérica en desarrollo de IA.":"<span class=\"fn\">1</span>Chile leads Latin America in AI development.",
+"Índice Latinoamericano de IA 2025 · puntaje 0–100":"Latin American AI Index 2025 · score 0–100",
+"<span class=\"fn\">2</span>Las empresas ya usan IA, pero pocas están preparadas.":"<span class=\"fn\">2</span>Companies already use AI, but few are prepared.",
+"Empresas chilenas que usan IA":"Chilean companies using AI",
+"Se sienten preparadas para integrarla":"Feel prepared to integrate it",
+"<span class=\"fn\">3</span>Las personas dicen conocerla, pero no la reconocen.":"<span class=\"fn\">3</span>People say they know it, but don't recognize it.",
+"Chilenos que dicen entender qué es la IA":"Chileans who say they understand what AI is",
+"Saben identificar qué productos la usan":"Can identify which products use it",
+"Antes de ver el dato, ¿qué crees?":"Before seeing the data, what do you think?",
+"Casi <b>7 de cada 10 chilenos</b> cree que la IA hará que se pierdan muchos puestos de trabajo.":"Almost <b>7 in 10 Chileans</b> believe AI will cause many jobs to be lost.",
+"¿Qué porcentaje de los empleos está realmente expuesto a la IA?":"What share of jobs is actually exposed to AI?",
+"del empleo mundial está expuesto a la IA, según el FMI; en economías avanzadas llega a ~60%. Estar expuesto no es desaparecer: cerca de la mitad de esos empleos podría beneficiarse si la IA se integra bien.":"of global employment is exposed to AI, according to the IMF; in advanced economies it reaches ~60%. Being exposed is not disappearing: about half of those jobs could benefit if AI is integrated well.",
+"Percepción vs exposición real (%)":"Perception vs actual exposure (%)",
+"Fuentes: CENIA–CEPAL, ILIA 2025 · Encuesta IA Defontana 2025 · Ipsos, Monitor de IA 2026 y Predicciones 2025 · FMI (2024).":"Sources: CENIA–CEPAL, ILIA 2025 · Defontana AI Survey 2025 · Ipsos, AI Monitor 2026 and Predictions 2025 · IMF (2024).",
+"La IA puede sumar hasta un 14% al PIB mundial al 2030, y usarla cuesta cada año menos. Latinoamérica es, por ahora, la región que menos captura.":"AI could add up to 14% to world GDP by 2030, and using it gets cheaper every year. Latin America is, for now, the region capturing the least.",
+"Aumento del PIB al 2030 por la IA, según región (%)":"GDP increase by 2030 from AI, by region (%)",
+"Latinoamérica es una de las regiones más rezagadas en lo que podría ganar con la IA. Esa brecha es justamente la oportunidad: quien se adelante en la región captura una ventaja que otros aún no tienen.":"Latin America is one of the regions furthest behind in what it could gain from AI. That gap is precisely the opportunity: whoever moves first in the region captures an advantage others don't yet have.",
+"Precio de una IA nivel GPT-4 (US$ por millón de tokens, escala log)":"Price of GPT-4-level AI (US$ per million tokens, log scale)",
+"Hoy hay más proveedores compitiendo y precios por token cada vez más bajos. Es un buen momento para incorporar IA: el costo de entrada nunca había sido tan bajo.":"Today there are more providers competing and ever lower prices per token. It is a good time to adopt AI: the cost of entry has never been this low.",
+"Fuentes: PwC, <i>Sizing the prize</i> (2017) · McKinsey, <i>The economic potential of generative AI</i> (2023) · Epoch AI, <i>LLM inference price trends</i> (benchmark GPQA Diamond).":"Sources: PwC, <i>Sizing the prize</i> (2017) · McKinsey, <i>The economic potential of generative AI</i> (2023) · Epoch AI, <i>LLM inference price trends</i> (GPQA Diamond benchmark).",
+"Entonces, ¿es la IA la solución a todo?":"So, is AI the solution to everything?",
+"Un experimento de Harvard con 758 consultores de BCG lo mostró con claridad: la IA ayuda mucho en algunas tareas y perjudica en otras que parecen igual de fáciles.":"A Harvard experiment with 758 BCG consultants showed it clearly: AI helps a lot with some tasks and hurts with others that look just as easy.",
+"En tareas donde la IA sirve":"On tasks where AI works",
+"de calidad en el trabajo, y 25% más rápido.":"higher work quality, and 25% faster.",
+"En tareas donde la IA no sirve":"On tasks where AI doesn't work",
+"de respuestas correctas: quienes usaron IA se equivocaron más que quienes no la usaron.":"in correct answers: those who used AI got more wrong than those who didn't.",
+"La diferencia no está en usar IA, <b>sino en saber dónde, cómo y cuándo no.</b>":"The difference isn't in using AI, <b>but in knowing where, how and when not to.</b>",
+"Encuestas, bases de datos, indicadores, reportería y aplicaciones a la medida: combino investigación social con ciencia de datos e IA para que la tecnología sume, no reste.":"Surveys, databases, indicators, reporting and custom applications: I combine social research with data science and AI so technology adds value instead of subtracting.",
+"Conversemos →":"Let's talk →",
+"hector.lara@ug.uchile.cl · copiar":"hector.lara@ug.uchile.cl · copy",
+"Fuente: Dell'Acqua et al., <i>Navigating the Jagged Technological Frontier</i>, Harvard Business School–BCG (2023).":"Source: Dell'Acqua et al., <i>Navigating the Jagged Technological Frontier</i>, Harvard Business School–BCG (2023).",
+"Experiencia":"Experience",
+"Descargar PDF ↓":"Download PDF ↓"
+};
 const A='#5bb5a6',B='#d6a45c',G='#3a3f46';
+Chart.register({id:'bg',beforeDraw(c){const x=c.ctx;x.save();x.globalCompositeOperation='destination-over';x.fillStyle='#0d0e10';x.fillRect(0,0,c.width,c.height);x.restore()}});
 Chart.defaults.color='#8a8f97';Chart.defaults.borderColor='#23262b';
 Chart.defaults.font.family='ui-monospace,"SF Mono",Menlo,Consolas,monospace';Chart.defaults.font.size=11;
 Chart.defaults.elements.bar.borderRadius=0;
-const rng=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
 const $=id=>document.getElementById(id);
-const fmt=n=>Math.round(n).toLocaleString('es-CL');
-const sel=(id,opts,cb)=>{$(id).innerHTML=opts.map(o=>`<option>${o}</option>`).join('');$(id).onchange=cb};
+let L='es';
+try{const q=new URLSearchParams(location.search).get('lang'),s=localStorage.getItem('lang');L=q||s||((navigator.language||'es').toLowerCase().startsWith('es')?'es':'en')}catch(e){}
+if(L!=='en')L='es';
+const tr=(es,en)=>L==='en'?en:es;
+const locale=()=>L==='en'?'en-US':'es-CL';
 const kpi=(l,v,d)=>`<div class="kpi"><small>${l}</small><b>${v}</b>${d===undefined?'':`<i class="${d>=0?'up':'down'}">${d>=0?'+':'−'}${Math.abs(d).toFixed(1)}</i>`}</div>`;
 const charts={};
-function draw(id,cfg){charts[id]&&charts[id].destroy();cfg.options={responsive:true,animation:{duration:200},plugins:{legend:{display:cfg.data.datasets.length>1,position:'bottom',labels:{boxWidth:10,boxHeight:2}}},...cfg.options};charts[id]=new Chart($(id),cfg)}
+let noAnim=false;
+function draw(id,cfg){charts[id]&&charts[id].destroy();cfg.options={responsive:true,animation:noAnim?false:{duration:200},plugins:{legend:{display:cfg.data.datasets.length>1,position:'bottom',labels:{boxWidth:10,boxHeight:2}}},...cfg.options};charts[id]=new Chart($(id),cfg)}
+const wrapTick=n=>function(v){const l=this.getLabelForValue(v);return l.length>n?l.match(new RegExp('.{1,'+n+'}(\\s|$)','g')).map(s=>s.trim()):l};
+
+/* Textos estáticos ES/EN */
+function applyStatic(){
+  document.querySelectorAll('body *').forEach(el=>{
+    if(el.closest('#exp,#s2k')||el.id==='moreBtn'||el.id==='langBtn')return;
+    if(el.dataset.es===undefined){const k=el.innerHTML.trim();if(!(k in EN))return;el.dataset.es=el.innerHTML}
+    el.innerHTML=L==='en'?EN[el.dataset.es.trim()]:el.dataset.es;
+  });
+  document.documentElement.lang=L;
+  document.title=tr('Héctor Lara Henríquez — Portafolio y CV','Héctor Lara Henríquez — Portfolio & CV');
+  $('langBtn').textContent=L==='en'?'ES':'EN';
+  $('langBtn').title=L==='en'?'Cambiar a español':'Switch to English';
+  document.querySelector('.cta').href='mailto:hector.lara@ug.uchile.cl?subject='+encodeURIComponent(tr('Conversemos sobre un proyecto',"Let's talk about a project"));
+  setMore();
+}
 
 /* Experiencia */
-let prevY='';
-$('exp').innerHTML=P.map(p=>{const y=(p.when.match(/\d{4}/)||[''])[0],show=y!==prevY;prevY=y;
-  const rg=p.when.replace(' · part-time','').replace('Presente','hoy');
-  return `<div class="ti${p.cur?' cur':''}"><div class="yr">${show?y:''}</div>
-  <div class="bd"><div class="rg">${rg}</div><h3>${p.title}</h3><div class="who">${p.org} · ${p.role}</div><p>${p.desc}</p></div></div>`}).join('');
+function renderExp(){
+  let prevY='';
+  $('exp').innerHTML=P.map(p=>{const d=L==='en'?{...p,...p.en}:p,y=(d.when.match(/\d{4}/)||[''])[0],show=y!==prevY;prevY=y;
+    const rg=d.when.replace(' · part-time','').replace('Presente','hoy').replace('Present','now');
+    return `<div class="ti${p.cur?' cur':''}"><div class="yr">${show?y:''}</div>
+    <div class="bd"><div class="rg">${rg}</div><h3>${d.title}</h3><div class="who">${d.org} · ${d.role}</div><p>${d.desc}</p></div></div>`}).join('');
+}
 
 /* Historia: datos reales con fuente */
-const pct={x:{ticks:{callback:v=>v+'%'}},y:{grid:{display:false}}};
-let quizBuilt=false;
+let quizBuilt=false,qDone=false,qOk=false;
+function drawQ(){
+  $('q1').querySelector('em').textContent=qOk?tr('Correcto. La realidad:','Correct. The reality:'):tr('La realidad:','The reality:');
+  draw('s1q',{type:'bar',data:{labels:[tr('Chilenos que creen que se perderán muchos empleos','Chileans who believe many jobs will be lost'),tr('Empleo expuesto · economías avanzadas','Employment exposed · advanced economies'),tr('Empleo expuesto · mundo','Employment exposed · world')],datasets:[{data:[68,60,40],backgroundColor:[G,B,A]}]},options:{indexAxis:'y',scales:{x:{min:0,max:100,ticks:{callback:v=>v+'%'}},y:{grid:{display:false},ticks:{callback:wrapTick(26)}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw+'%'}}}}});
+}
 function s1(){
-  draw('s1c',{type:'bar',data:{labels:['Chile','Brasil','Uruguay','Promedio región'],datasets:[{data:[70.56,67.39,62.32,42.98],backgroundColor:[A,G,G,B]}]},options:{indexAxis:'y',scales:{x:{min:0,max:100},y:{grid:{display:false}}}}});
+  draw('s1c',{type:'bar',data:{labels:['Chile',tr('Brasil','Brazil'),'Uruguay',tr('Promedio región','Region average')],datasets:[{data:[70.56,67.39,62.32,42.98],backgroundColor:[A,G,G,B]}]},options:{indexAxis:'y',scales:{x:{min:0,max:100},y:{grid:{display:false}}}}});
   if(quizBuilt)return;quizBuilt=true;
   const card=$('q1'),C=2;
   card.querySelector('.opts').onclick=e=>{const b=e.target.closest('button[data-j]');if(!b)return;const j=+b.dataset.j;
     card.querySelectorAll('.opts button').forEach(k=>{k.disabled=true;if(+k.dataset.j===C)k.classList.add('ok')});
     if(j!==C)b.classList.add('no');
-    card.querySelector('em').textContent=j===C?'Correcto. La realidad:':'La realidad:';
-    card.classList.add('done');
-    draw('s1q',{type:'bar',data:{labels:['Chilenos que creen que se perderán muchos empleos','Empleo expuesto · economías avanzadas','Empleo expuesto · mundo'],datasets:[{data:[68,60,40],backgroundColor:[G,B,A]}]},options:{indexAxis:'y',scales:{x:{min:0,max:100,ticks:{callback:v=>v+'%'}},y:{grid:{display:false},ticks:{callback:function(v){const l=this.getLabelForValue(v);return l.length>26?l.match(/.{1,26}(\s|$)/g).map(s=>s.trim()):l}}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw+'%'}}}}});
+    qOk=j===C;qDone=true;card.classList.add('done');drawQ();
   };
 }
 function s2(){
-  $('s2k').innerHTML=kpi('PIB mundial al 2030','+14%')+kpi('Valor adicional (PwC)','US$15,7 bn')+kpi('IA generativa, por año','US$2,6–4,4 bn')+kpi('Precio nivel GPT-4, 2023→2024','312× menor');
-  const reg=['China','Norteamérica','Mundo','Europa y Asia desarrollada','Latinoamérica, África y Asia en desarrollo'],lab=['26%','14,5%','14%','9–12%','menos de 6%'];
-  draw('s2a',{type:'bar',data:{labels:reg,datasets:[{data:[26,14.5,14,12,6],backgroundColor:[G,G,A,G,B]}]},options:{indexAxis:'y',scales:{x:{min:0,max:30,ticks:{callback:v=>v+'%'}},y:{grid:{display:false},ticks:{callback:function(v){const l=this.getLabelForValue(v);return l.length>22?l.match(/.{1,22}(\s|$)/g).map(x=>x.trim()):l}}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>lab[c.dataIndex]}}}}});
-  draw('s2b',{type:'line',data:{labels:['Mar 2023\nGPT-4','Mar 2024\nClaude 3 Haiku','May 2024\nGemini 1.5 Flash','Dic 2024\nPhi 4'].map(x=>x.split('\n')),datasets:[{data:[37.5,0.5,0.13,0.12],borderColor:A,backgroundColor:A+'1f',fill:true,tension:.2,pointRadius:4,pointBackgroundColor:A}]},options:{scales:{y:{type:'logarithmic',min:0.05,max:100,ticks:{callback:v=>[0.1,1,10,100].includes(v)?'US$'+v:''}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'US$ '+c.raw.toLocaleString('es-CL')+' por millón de tokens'}}}}});
+  $('s2k').innerHTML=kpi(tr('PIB mundial al 2030','World GDP by 2030'),'+14%')+kpi(tr('Valor adicional (PwC)','Added value (PwC)'),tr('US$15,7 bn','US$15.7 trillion'))+kpi(tr('IA generativa, por año','Generative AI, per year'),tr('US$2,6–4,4 bn','US$2.6–4.4 trillion'))+kpi(tr('Precio nivel GPT-4, 2023→2024','GPT-4-level price, 2023→2024'),tr('312× menor','312× lower'));
+  const reg=['China',tr('Norteamérica','North America'),tr('Mundo','World'),tr('Europa y Asia desarrollada','Europe and developed Asia'),tr('Latinoamérica, África y Asia en desarrollo','Latin America, Africa and developing Asia')],lab=['26%',tr('14,5%','14.5%'),'14%','9–12%',tr('menos de 6%','under 6%')];
+  draw('s2a',{type:'bar',data:{labels:reg,datasets:[{data:[26,14.5,14,12,6],backgroundColor:[G,G,A,G,B]}]},options:{indexAxis:'y',scales:{x:{min:0,max:30,ticks:{callback:v=>v+'%'}},y:{grid:{display:false},ticks:{callback:wrapTick(22)}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>lab[c.dataIndex]}}}}});
+  draw('s2b',{type:'line',data:{labels:['Mar 2023\nGPT-4','Mar 2024\nClaude 3 Haiku','May 2024\nGemini 1.5 Flash',tr('Dic','Dec')+' 2024\nPhi 4'].map(x=>x.split('\n')),datasets:[{data:[37.5,0.5,0.13,0.12],borderColor:A,backgroundColor:A+'1f',fill:true,tension:.2,pointRadius:4,pointBackgroundColor:A}]},options:{scales:{y:{type:'logarithmic',min:0.05,max:100,ticks:{callback:v=>[0.1,1,10,100].includes(v)?'US$'+v:''}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'US$ '+c.raw.toLocaleString(locale())+tr(' por millón de tokens',' per million tokens')}}}}});
 }
 function s3(){}
 
@@ -382,14 +486,32 @@ function show(id){
 }
 document.querySelectorAll('.tabs').forEach(t=>t.onclick=e=>{const b=e.target.closest('[data-p]');if(b)show(b.dataset.p)});
 document.querySelectorAll('button.nextb').forEach(b=>b.onclick=()=>{show(b.dataset.next);$('dashboards').scrollIntoView({behavior:'smooth'})});
-show('s1');
-document.querySelectorAll('.copy').forEach(b=>b.onclick=()=>{const m=b.dataset.mail;(navigator.clipboard?navigator.clipboard.writeText(m):Promise.reject()).then(()=>{b.textContent=m+' · copiado ✓'},()=>{b.textContent=m})});
-$('moreBtn').onclick=e=>{const t=document.querySelector('.more .txt'),c=t.classList.toggle('clamp');e.target.textContent=c?'Saber más':'Ver menos'};
+document.querySelectorAll('.copy').forEach(b=>b.onclick=()=>{const m=b.dataset.mail;(navigator.clipboard?navigator.clipboard.writeText(m):Promise.reject()).then(()=>{b.textContent=m+' · '+tr('copiado ✓','copied ✓')},()=>{b.textContent=m})});
+let clamped=true;
+function setMore(){$('moreBtn').textContent=clamped?tr('Saber más','Read more'):tr('Ver menos','Show less')}
+$('moreBtn').onclick=()=>{clamped=!clamped;document.querySelector('.more .txt').classList.toggle('clamp',clamped);setMore()};
+
+/* Idioma */
+function redraw(){document.querySelectorAll('.panel').forEach(p=>{if(!p.hidden)RENDER[p.id]()});if(qDone)drawQ()}
+$('langBtn').onclick=()=>{L=L==='en'?'es':'en';try{localStorage.setItem('lang',L)}catch(e){}applyStatic();renderExp();redraw()};
+
+/* PDF: imprime todos los paneles (Guardar como PDF) */
+const wasHidden={};
+function prepPrint(){
+  document.querySelectorAll('.panel').forEach(p=>{wasHidden[p.id]=p.hidden;p.hidden=false;
+    const tab=document.querySelector(`[data-p="${p.id}"]`);p.dataset.t=tab?tab.children[0].textContent+' · '+tab.children[1].textContent:''});
+  noAnim=true;s1();s2();if(qDone)drawQ();
+}
+function endPrint(){document.querySelectorAll('.panel').forEach(p=>{if(p.id in wasHidden)p.hidden=wasHidden[p.id]});noAnim=false}
+window.addEventListener('beforeprint',prepPrint);window.addEventListener('afterprint',endPrint);
+$('pdfBtn').onclick=()=>window.print();
+
+applyStatic();renderExp();show('s1');
 </script>
 <script>
 document.addEventListener('click',e=>{
   const t=e.target.closest('a,button');if(!t||!window.goatcounter||!goatcounter.count)return;
-  let n=t.dataset.p?'tab-'+t.dataset.p:t.dataset.next?'siguiente-'+t.dataset.next:t.id==='moreBtn'?'saber-mas':t.classList.contains('copy')?'copiar-correo':t.closest('.qc')?'quiz':t.classList.contains('cta')?'conversemos':t.href?(t.href.includes('linkedin')?'linkedin':t.href.includes('github.com')?'github':t.href.startsWith('mailto')?'correo':t.getAttribute('href')==='#cv'?'ver-experiencia':''):'';
+  let n=t.dataset.p?'tab-'+t.dataset.p:t.dataset.next?'siguiente-'+t.dataset.next:t.id==='moreBtn'?'saber-mas':t.id==='langBtn'?'idioma-'+(document.documentElement.lang):t.id==='pdfBtn'?'descargar-pdf':t.classList.contains('copy')?'copiar-correo':t.closest('.qc')?'quiz':t.classList.contains('cta')?'conversemos':t.href?(t.href.includes('linkedin')?'linkedin':t.href.includes('github.com')?'github':t.href.startsWith('mailto')?'correo':t.getAttribute('href')==='#cv'?'ver-experiencia':''):'';
   if(n)goatcounter.count({path:'click-'+n,title:n,event:true});
 });
 </script>
